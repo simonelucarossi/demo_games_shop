@@ -3,9 +3,10 @@ import { Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/dashboard/dashboard';
 import Product from './pages/product/details/product';
 import NewEditProduct from './pages/product/wizards/newEditProduct';
+import { categoriesName } from './utils/categoriesMapping';
 
 const Router = () => {
-  const routes = [
+  let routes = [
     {
       title: 'Home',
       key: 'home',
@@ -55,6 +56,20 @@ const Router = () => {
       },
     },
   ];
+
+  categoriesName.forEach((category) => {
+    routes = [
+      ...routes,
+      {
+      title: category.toLocaleUpperCase(),
+      key: category,
+      link: `/products/${category}`,
+      // eslint-disable-next-line react/display-name
+      component: <Dashboard categoryFilter={category}/>,
+      }
+    ];
+  });
+
   return (
       <Routes>
         {routes.map(({ key, title, link, component }) => {
