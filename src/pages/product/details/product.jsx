@@ -1,5 +1,5 @@
-import React from "react";
-import Navbar from "../../components/navbar/navbar";
+import React, { useState } from "react";
+import Navbar from "../../../components/navbar/navbar";
 import {
   Box,
   Flex,
@@ -11,6 +11,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Heading,
 } from "@chakra-ui/react";
 import {
   Previous,
@@ -22,11 +23,15 @@ import {
 } from 'chakra-paginator';
 import { AiOutlineTag } from 'react-icons/ai';
 import { BsBasket, BsSearch } from 'react-icons/bs';
-import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
+import { FiDelete, FiEdit3 } from 'react-icons/fi';
+import { IoChevronBackOutline } from 'react-icons/io5';
+import { categoriesName } from "../../../utils/categoriesMapping";
 import { useNavigate } from "react-router-dom";
 
-const Dashboard = (props) => {
+const Product = (props) => {
   const history = useNavigate();
+  const idProduct = (window.location.href).split('/')[(window.location.href).split('/').length - 1];
+  const typeUser = 0;
   const items = [
     {
       id: '1',
@@ -126,48 +131,7 @@ const Dashboard = (props) => {
     },
   ];
 
-  const {
-    isDisabled,
-    pagesQuantity,
-    currentPage
-  } = usePaginator({
-    total: 20,
-    initialState: {
-      pageSize: 10,
-      currentPage: 1,
-      isDisabled: false
-    }
-  });
-
-  const outerLimit = 2;
-  const innerLimit = 2;
-
-  // styles
-  const baseStyles = {
-    w: 7,
-    fontSize: "sm"
-  };
-
-  const normalStyles = {
-    ...baseStyles,
-    _hover: {
-      bg: "gray.400"
-    },
-    bg: "gray.300"
-  };
-
-  const activeStyles = {
-    ...baseStyles,
-    _hover: {
-      bg: "orange.300"
-    },
-    bg: "orange.300"
-  };
-
-  const separatorStyles = {
-    w: 7,
-    bg: "green.200"
-  };
+  const [product, setProduct] = useState(items[idProduct - 1]);
 
   return (
     <>
@@ -184,18 +148,25 @@ const Dashboard = (props) => {
         marginLeft={{ base: '0px', md: '15vw' }}
         marginRight={{ base: '0px', md: '15vw' }}
       >
-        <InputGroup size='md' w={'100%'} h={50} margin={4}>
-          <Input
-            h={50}
-            placeholder='Search a game...'
-            color={'gray.400'}
-          />
-          <InputRightElement h={50} p={1} width='5rem'>
-            <Button h='100%' bg={'orange.400'} ml={7} size='sm'>
-              <BsSearch/>
-            </Button>
-          </InputRightElement>
-        </InputGroup>
+        {/* HEADER */}
+        <Flex mb={10} w={'100%'}>
+          <Button 
+            leftIcon={<IoChevronBackOutline 
+            color='white' 
+            fontSize={17}/>} 
+            mr={4} 
+            h={'60px'} 
+            bg={'orange.400'}
+            onClick={() => history('/')}
+          >
+            <Text>
+              Back
+            </Text>
+          </Button>
+          <Heading color={'black'} as='h2' size='3xl' isTruncated>
+            {product?.title}
+          </Heading>  
+        </Flex>
         <Grid
           direction={{ base: "column", md: "row" }}
           width={{ base: "full", md: "100%" }}
@@ -203,101 +174,119 @@ const Dashboard = (props) => {
           mt={{ base: 4, md: 0 }}
           templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(3, 1fr)' }}
         >
-          {
-            items.map((item, i) => {
-              return (
-                <GridItem rowSpan={1} colSpan={1}>
-                  <Box 
-                    bg={'white'}
-                    className="list-item"
-                    border={'1px solid #efefef'}
-                    borderRadius={8}
-                    padding={6}
-                    margin={4}
-                    color='black'
-                    position={'relative'}
-                  >
-                    <Text borderRadius={4} fontSize={14} fontWeight={500} position={'absolute'} top={8} left={8} bg={'red.400'} pl={3} pr={3} pb={2} pt={2} color={'white'}>
-                      { item?.price }
-                    </Text>
-                    <Flex direction='column' textAlign={'center'}>
-                      {/* PRODUCT IMAGE */}
-                      <Image
-                        borderTopRadius={5}
-                        boxSize='180px'
-                        src={item?.img}
-                        alt={item?.title ?? 'Title not found'}
-                        w={'100%'}
-                        mb={2}
-                      />
-                      {/* PRODUCT TITLE */}
-                      <Text mb={2}>
-                        <b> { item?.title ?? 'Title not found' } </b> 
-                      </Text> 
-                      {/* BUTTONS */}
-                      <Button 
-                        mb={2} 
-                        bg={'orange.400'} 
-                        color='white'
-                        onClick={() => history(`/product/${item?.id}`)}
-                      >
-                        View Details
-                      </Button> 
-                      <Button mb={2} bg={'red.400'} color='white'>
-                        <BsBasket/>
-                        <Text marginLeft={'4px'}> Add to basket </Text>
-                      </Button>
-                      {/* TAGS */}
-                      <Flex direction={'row'}>
-                        {
-                          item?.tags?.length > 0 ? (
-                            item?.tags?.map((tag) => {
-                              return (
-                                <Button w={'fit-content'} h={25} mr={2} bg={'gray.300'} color='white'>
-                                  <AiOutlineTag/>
-                                  <Text fontSize={12} marginLeft={'4px'}>{tag}</Text>
-                                </Button>
-                              )
-                            })
-                          ) : (
-                            <Button w={'fit-content'} h={25} bg={'gray.300'} color='white'>
-                              <AiOutlineTag/>
-                              <Text fontSize={12} marginLeft={'4px'}>No tags</Text>
-                            </Button>
-                          )
-                        }
-                      </Flex>
-                    </Flex>
-                  </Box>
+                <GridItem rowSpan={1} colSpan={{ base: '3', md: '1' }}>
+                  {/* PRODUCT IMAGE */}
+                  <Image
+                    borderRadius={3}
+                    boxSize='250px'
+                    src={product?.img}
+                    alt={product?.title ?? 'Title not found'}
+                    w={'100%'}
+                    mb={2}
+                    mt={0}
+                    border={'1px solid'}
+                    borderColor={'gray.200'}
+                    p={1}
+                  />
                 </GridItem>
-                
-              )
-            })
-          }
+                <GridItem h={'100%'} rowSpan={1} colSpan={{ base: '3', md: '2' }}>
+                  <Flex ml={5} justifyContent={'flex-start'} mt={5} direction={'column'}>
+                    {/* PRODUCT PRICE */}
+                    <Heading mb={4} color={'red.400'} as='h3' size='lg'>
+                      ${product['price']}
+                    </Heading>
+                    {/* PRODUCT TAGS */}
+                    <Flex mb={3} direction={'row'}>
+                      {
+                        product?.tags.length < 1 ? (
+                          <Button w={'fit-content'} h={45} bg={'gray.300'} color='white'>
+                            <AiOutlineTag/>
+                            <Text fontSize={12} marginLeft={'4px'}>No tags</Text>
+                          </Button>
+                        ) : (
+                          product?.tags.map((tag) => {
+                            return (
+                              <Button mr={2} w={'fit-content'} h={45} bg={'gray.300'} color='white'>
+                                <AiOutlineTag/>
+                                <Text fontSize={12} marginLeft={'4px'}>{tag}</Text>
+                              </Button>
+                            )
+                          })
+                        )
+                      }
+                    </Flex>
+                    {/* PRODUCT CATEGORY */}
+                    <Flex direction={'row'}>
+                      {/* ROW TITLE */}
+                      <Text 
+                        color={'white'}
+                        bg={'orange.400'}
+                        p={3}
+                        mr={2}
+                        mb={2}
+                        borderRadius={4}
+                      >
+                        Category
+                      </Text>
+                      {/* ROW TEXT */}
+                      <Text 
+                        color={'white'}
+                        bg={'gray.500'}
+                        p={3}
+                        mb={2}
+                        w={'100%'}
+                        borderRadius={4}
+                      >
+                        {categoriesName[product['category']]}
+                      </Text>
+                    </Flex>
+                    {/* BUY-EDIT-REMOVE BUTTON  */}
+                    {
+                      typeUser !== 0 ? (
+                        <Button mt={2} h={45} bg={'red.300'} color='white'>
+                          <BsBasket/>
+                          <Text fontSize={12} marginLeft={'4px'}>Add to basket</Text>
+                        </Button>
+                      ) : (
+                        <>
+                          <Button onClick={() => history(`/editProduct/${product?.id}`)} mt={2} h={45} bg={'yellow.300'} color='white'>
+                            <FiEdit3/>
+                            <Text fontSize={12} marginLeft={'4px'}>Edit product</Text>
+                          </Button>
+                          <Button mt={2} h={45} bg={'red.300'} color='white'>
+                            <FiDelete/>
+                            <Text fontSize={12} marginLeft={'4px'}>Delete</Text>
+                          </Button>
+                        </>
+                      )
+                    }
+                  </Flex>
+                </GridItem>
+                {/* PRODUCT DESCRIPTION */}
+                <GridItem rowSpan={1} colSpan={3}>
+                  <Flex mt={5} direction={'column'}>
+                    {/* ROW TITLE */}
+                    <Text 
+                      color={'white'}
+                      bg={'orange.400'}
+                      p={3}
+                      mr={5}
+                      mb={2}
+                      borderRadius={4}
+                      w={'fit-content'}
+                    >
+                      Description
+                    </Text>
+                   {/* ROW TEXT */}
+                    <Text color={'black'}>
+                      {product['description']}
+                    </Text>
+                  </Flex> 
+                </GridItem>
         </Grid>
-        <Paginator
-          isDisabled={isDisabled}
-          innerLimit={innerLimit}
-          currentPage={currentPage}
-          outerLimit={outerLimit}
-          pagesQuantity={pagesQuantity}
-          normalStyles={normalStyles}
-          separatorStyles={separatorStyles}
-          activeStyles={activeStyles}
-        >
-          <Container align="center" justify="space-between" w="full" p={4}>
-            <Previous bg={'red.300'} _hover={{ bg: 'red.400'}}>
-              <GrFormPreviousLink fontSize={17}/>
-            </Previous>
-            <PageGroup isInline align="center" />
-            <Next bg={'red.300'} _hover={{ bg: 'red.400'}}>
-              <GrFormNextLink fontSize={17}/>
-            </Next>
-          </Container>
-        </Paginator>
       </Flex>
     </>
   )
 };
 
-export default Dashboard;
+export default Product;

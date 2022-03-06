@@ -9,6 +9,7 @@ import {
   useDisclosure
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { BiUserCircle } from 'react-icons/bi';
 
 const Navbar = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -21,7 +22,7 @@ const Navbar = (props) => {
       justify="space-between"
       wrap="wrap"
       padding={6}
-      bg="teal.500"
+      bg="orange.400"
       color="white"
       {...props}
     >
@@ -56,7 +57,10 @@ const Navbar = (props) => {
           variant="outline"
           _hover={{ bg: "teal.700", borderColor: "teal.700" }}
         >
-          Login
+          <BiUserCircle fontSize={18}/>
+          <Text ml={1} fontSize={14}>
+            Login
+          </Text>
         </Button>
       </Box>
     </Flex>

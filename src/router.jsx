@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/dashboard/dashboard';
+import Product from './pages/product/details/product';
+import NewEditProduct from './pages/product/wizards/newEditProduct';
 
 const Router = () => {
   const routes = [
@@ -10,6 +12,28 @@ const Router = () => {
       link: '/',
       // eslint-disable-next-line react/display-name
       component: <Dashboard />,
+    },
+    {
+      title: 'Product',
+      key: 'product',
+      link: '/product/:producId',
+      // eslint-disable-next-line react/display-name
+      component: <Product />,
+    },
+    
+    {
+      title: 'NewProduct',
+      key: 'newproduct',
+      link: '/newProduct',
+      // eslint-disable-next-line react/display-name
+      component: <NewEditProduct/>,
+    },
+    {
+      title: 'EditProduct',
+      key: 'editproduct',
+      link: '/editProduct/:producId',
+      // eslint-disable-next-line react/display-name
+      component: <NewEditProduct editing/>,
     },
     {
       title: 'No-Match',
