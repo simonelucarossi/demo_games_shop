@@ -2,16 +2,19 @@ import React from "react";
 import {
   Box,
   Stack,
-  Heading,
   Flex,
   Text,
   Button,
-  useDisclosure
+  useDisclosure,
+  Image
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { BiUserCircle } from 'react-icons/bi';
+import { useNavigate } from "react-router-dom";
+import { categoriesName } from "../../utils/categoriesMapping";
 
 const Navbar = (props) => {
+  const history = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
 
@@ -26,14 +29,12 @@ const Navbar = (props) => {
       color="white"
       {...props}
     >
-      <Flex align="center" mr={5}>
-        <Heading as="h1" size="lg" letterSpacing={"tighter"}>
-          Games Shop
-        </Heading>
+      <Flex as={'Button'} onClick={ () => { handleToggle(); history('/')}} align="center" mr={5}>
+        <Image src={'/logo_game_shop.png'} h={75} />
       </Flex>
 
-      <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
-        <HamburgerIcon />
+      <Box border={'1px solid'} borderColor={'white'} p={3} borderRadius={5} display={{ base: "block", md: "none" }} onClick={handleToggle}>
+        <HamburgerIcon fontSize={30} />
       </Box>
 
       <Stack
@@ -43,10 +44,15 @@ const Navbar = (props) => {
         alignItems="center"
         flexGrow={1}
         mt={{ base: 4, md: 0 }}
+        ml={{ base: 0, md: 4 }}
       >
-        <Text>Docs</Text>
-        <Text>Examples</Text>
-        <Text>Blog</Text>
+        {
+          categoriesName.map((category, index) => {
+            return (
+              <Text key={index} style={{ cursor: 'pointer'}} p={4} fontWeight={500} onClick={() => { handleToggle(); history(`/products/${category}`)}}>{category.toUpperCase()}</Text>
+            )
+          })
+        }
       </Stack>
 
       <Box

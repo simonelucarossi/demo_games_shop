@@ -1,0 +1,29 @@
+import React from "react";
+import {
+  InputLeftElement,
+  Input,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
+
+const WizardInput = ({field, key, ...props}) => {
+  return (
+    <InputGroup key={key} mb={3} {...props}>
+      <InputLeftElement
+        pointerEvents='none'
+        color='gray.300'
+        fontSize='1.2em'
+        children={field?.leftIcon}
+      />
+      <Input 
+        value={field?.inputValue} 
+        placeholder={field?.placeholder} 
+        color='black' 
+        onChange={field?.inputFunction}
+      />
+      <InputRightElement children={field?.rightIcon} />
+    </InputGroup>
+  )
+}
+
+export default WizardInput;
