@@ -1,18 +1,20 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/dashboard/dashboard';
+import Login from './pages/login/login';
 import Product from './pages/product/details/product';
 import NewEditProduct from './pages/product/wizards/newEditProduct';
 import { categoriesName } from './utils/categoriesMapping';
 
 const Router = () => {
+
   let routes = [
     {
       title: 'Home',
       key: 'home',
       link: '/',
       // eslint-disable-next-line react/display-name
-      component: <Dashboard />,
+      component: <Dashboard/>,
     },
     {
       title: 'Product',
@@ -34,7 +36,14 @@ const Router = () => {
       key: 'editproduct',
       link: '/editProduct/:producId',
       // eslint-disable-next-line react/display-name
-      component: <NewEditProduct editing/>,
+      component: <NewEditProduct isEditing/>,
+    },
+    {
+      title: 'Login',
+      key: 'login',
+      link: '/login',
+      // eslint-disable-next-line react/display-name
+      component: <Login/>,
     },
     {
       title: 'No-Match',
@@ -65,7 +74,7 @@ const Router = () => {
       key: category,
       link: `/products/${category}`,
       // eslint-disable-next-line react/display-name
-      component: <Dashboard categoryFilter={category}/>,
+      component: <Dashboard categoryFilter={categoriesName.indexOf(category)}/>,
       }
     ];
   });
