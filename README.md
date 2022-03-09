@@ -1,70 +1,95 @@
-# Getting Started with Create React App
+# Games shop demo
+## Introduction
+`Games shop demo` is the base of a "boilerplate" to create online shops via React.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The project is developed using JavaScript and runs on the [nodeJS](https://nodejs.org/en/) runtime.
 
-## Available Scripts
+UI is created using [React](https://it.reactjs.org/) with the support of [ChakraUI](https://chakra-ui.com/).
 
-In the project directory, you can run:
+The back-end is developed using [Express](https://expressjs.com/), [Sequelize](https://sequelize.org/) and [postgreSQL](https://www.postgresql.org/); 
 
-### `npm start`
+Games shop has the following features:
+* `paginator` - Choose the page of products that you want to view
+* `searchbar` - Search your product in the list!
+* `responsive design` - The view changes between desktop and mobile versions!
+### TABLET VIEW
+![responsive_2](/src/assets/screens/tablet_view.png)
+### MOBILE VIEW
+![responsive_3](/src/assets/screens/phone_view.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ROUTES
+* `/` - To view HomePage
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![responsive_1](/src/assets/screens/dashboard_screen.png)
 
-### `npm test`
+* `/products/:productId` - To view product details
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![details](/src/assets/screens/product_details.png)
 
-### `npm run build`
+* `/editProduct/:productId` - To edit a product
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![edit](/src/assets/screens/editing_a_product.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* `/createProduct` - To create a new product
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![create](/src/assets/screens/creation_of_a_product.png)
 
-### `npm run eject`
+* `/login` - To view login page
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![login](/src/assets/screens/login.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## BE ROUTES
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### GET METHODS
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+* `GET /products` - get all products
+* `GET /products/:productId` - get product details
 
-## Learn More
+### PUT METHODS
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* `PUT /products/:productId` - edit the product on db
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### POST METHODS
 
-### Code Splitting
+* `POST /product` - create a new product on db
+* `POST  /login` - To login on the portal
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### DELETE METHODS
 
-### Analyzing the Bundle Size
+* `DELETE /products/:productId` - delete the product from the db
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Installation / Run
 
-### Making a Progressive Web App
+To view the project correctly, first start the back_end part of the project and then the web app.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+! Attention The server will start on port 3000 and the react part on port 3006, if they are not available, change the pointers within the project.
 
-### Advanced Configuration
+### BE SIDE
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+To run the BE, install all node packages with the command below:
 
-### Deployment
+```
+cd games_shop_backend
+$ npm install 
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+When all packages have installed, run the command:
 
-### `npm run build` fails to minify
+```
+$ npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### FE SIDE
+
+To run the project, open a new terminal and install all node packages with the command below:
+
+```
+cd ..
+$ npm install 
+```
+
+When all packages have installed, run the command:
+
+```
+$ npm start
+```
