@@ -7,10 +7,10 @@ const CardImage = ({item, ...props}) => {
   return (
     <Image
       borderTopRadius={5}
-      boxSize={{ base: '200px', md: '180px' }}
+      boxSize={{ base: '250px', sm: '350px', xl: '350px', '2xl': '380px',  md: '180px' }}
       src={item?.img}
       alt={item?.title ?? 'Title not found'}
-      w={{ base: '100vw', md: '100%' }}
+      w={{ base: '100vw', sm:'100vw', xl:'100vw', '2xl':'100vw', md: '100%' }}
       mb={2}
     />
   )

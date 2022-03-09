@@ -8,16 +8,16 @@ import {
   usePaginator,
 } from 'chakra-paginator';
 import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
-const ListPaginator = ({ totalElements, activePage, disabled, ...props } ) => {
+const ListPaginator = ({ totalElements, pageSize, activePage, setActivePage, disabled, ...props } ) => {
   // variables
   const {
     isDisabled,
     pagesQuantity,
     currentPage
   } = usePaginator({
-    total: 20,
+    total: totalElements ?? 9,
     initialState: {
-      pageSize: totalElements ?? 10,
+      pageSize: pageSize ?? 9,
       currentPage: activePage ?? 1,
       isDisabled: disabled ?? false
     }
@@ -69,6 +69,7 @@ const ListPaginator = ({ totalElements, activePage, disabled, ...props } ) => {
         normalStyles={normalStyles}
         separatorStyles={separatorStyles}
         activeStyles={activeStyles}
+        onPageChange={(e) => setActivePage(e)}
         {...props}
       >
         <Container align="center" justify="space-between" w="full" p={4}>

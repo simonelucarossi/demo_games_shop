@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Flex,
   Text,
@@ -6,12 +6,16 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { IoChevronBackOutline } from 'react-icons/io5';
+import { Context } from "../../context/context";
 
-const Header = ({product, history, ...props}) => {
+const Header = ({product, ...props}) => {
+  const {
+    history
+  } = useContext(Context);
   const buttons = {
     back: {
       text: 'Back',
-      function: () => history('/'),
+      function: () => history(-1),
       leftIcon: <IoChevronBackOutline color='white' fontSize={17}/>
     }
   } 

@@ -6,7 +6,7 @@ import {
 import { BsBasket } from 'react-icons/bs';
 import { FiDelete, FiEdit3 } from 'react-icons/fi';
 
-const Buttons = ({typeUser, history, product, ...props}) => {
+const Buttons = ({typeUser, deleteProduct, history, product, ...props}) => {
   return (
     typeUser !== 0 ? (
       <Button mt={2} h={45} bg={'red.300'} color='white'>
@@ -19,7 +19,7 @@ const Buttons = ({typeUser, history, product, ...props}) => {
           <FiEdit3/>
           <Text fontSize={12} marginLeft={'4px'}>Edit product</Text>
         </Button>
-        <Button mt={2} h={45} bg={'red.300'} color='white'>
+        <Button onClick={() => deleteProduct()} mt={2} h={45} bg={'red.300'} color='white'>
           <FiDelete/>
           <Text fontSize={12} marginLeft={'4px'}>Delete</Text>
         </Button>

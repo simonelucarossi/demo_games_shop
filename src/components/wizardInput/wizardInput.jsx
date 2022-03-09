@@ -3,7 +3,6 @@ import {
   InputLeftElement,
   Input,
   InputGroup,
-  InputRightElement,
 } from "@chakra-ui/react";
 
 const WizardInput = ({field, key, ...props}) => {
@@ -17,11 +16,11 @@ const WizardInput = ({field, key, ...props}) => {
       />
       <Input 
         value={field?.inputValue} 
-        placeholder={field?.placeholder} 
-        color='black' 
+        placeholder={field?.inputPlaceHolder} 
+        color='black'
+        _placeholder={{color: 'gray.400'}}
         onChange={field?.inputFunction}
       />
-      <InputRightElement children={field?.rightIcon} />
     </InputGroup>
   )
 }

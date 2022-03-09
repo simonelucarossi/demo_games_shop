@@ -20,8 +20,12 @@ const SearchBar = ({
     buttonMarginLeft, 
     buttonSize, 
     buttonIcon, 
+    filters,
+    setFilters,
+    buttonOnClick,
     ...props 
   } ) => {
+
     return (
       <>
         <InputGroup size={ size ?? 'md'} w={width ?? '100%'} h={height ?? 50} margin={margin ?? 4} {...props}>
@@ -30,10 +34,12 @@ const SearchBar = ({
             h={inputHeight ?? 50}
             placeholder={inputPlaceHolder ?? 'Search a game...'}
             color={inputColor ?? 'gray.400'}
+            value={filters['title']}
+            onChange={(e) => setFilters({...filters, title: e.target?.value !== '' ? e.target?.value : undefined})}
           />
           {/* Button on the right side */}
           <InputRightElement h={50} p={1} width='5rem'>
-            <Button h={buttonH ?? '100%'} bg={buttonBg ?? 'orange.400'} ml={buttonMarginLeft ?? 7} size={ buttonSize ?? 'sm'}>
+            <Button onClick={() => buttonOnClick()} h={buttonH ?? '100%'} bg={buttonBg ?? 'orange.400'} ml={buttonMarginLeft ?? 7} size={ buttonSize ?? 'sm'}>
               <BsSearch/>
             </Button>
           </InputRightElement>

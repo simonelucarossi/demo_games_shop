@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import products from '../../../utils/mocks/products.json';
+import React, { useContext, useEffect, useState } from "react";
 import PageContainer from "../../../components/pageContainer/pageContainer";
 import Header from "../../../components/header/header";
 import ProductImage from "../wizards/atoms/productImage";
@@ -10,18 +8,25 @@ import Tags from "./atoms/tags";
 import Category from "./atoms/category";
 import Buttons from "./atoms/buttons";
 import Description from "./atoms/description";
+import { Context } from "../../../context/context";
+import { ApiWrapper } from "../../../utils/api/apiWrapper";
 
 const Product = (props) => {
-  const history = useNavigate();
   const idProduct = (window.location.href).split('/')[(window.location.href).split('/').length - 1];
-  const typeUser = 0;
-  const items = products?.products;
-
   const [product, setProduct] = useState({});
+  const {
+    user,
+    history,
+    NetComLib,
+    toast,
+  } = useContext(Context);
+
+  const getProduct = () => ApiWrapper(() => NetComLib.Products.getProduct({}, idProduct, (response) => setProduct(response?.data?.product[0])), toast, '', 'Generic Error', false, true);
+  const deleteProduct = () => ApiWrapper(() => NetComLib.Products.deleteProduct({}, idProduct, () => history('/')), toast, 'Product successfully deleted!');
 
   useEffect(() => {
-    setProduct(items[idProduct - 1]);
-  }, [idProduct, items]);
+    getProduct();
+  }, []);
 
   return (
     <>
@@ -44,7 +49,7 @@ const Product = (props) => {
                 {/* PRODUCT CATEGORY */}
                 <Category product={product}/>
                 {/* BUY-EDIT-REMOVE BUTTON  */}
-                <Buttons history={history} typeUser={typeUser} product={product}/>
+                <Buttons history={history} deleteProduct={deleteProduct} typeUser={user?.type} product={product}/>
               </>
             )
           }

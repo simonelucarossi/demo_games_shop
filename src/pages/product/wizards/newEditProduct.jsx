@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BsImages } from 'react-icons/bs';
 import { FaCheck } from 'react-icons/fa';
 import { MdTitle } from 'react-icons/md';
-import { useNavigate } from "react-router-dom";
-import products from '../../../utils/mocks/products.json';
 import PageContainer from "../../../components/pageContainer/pageContainer";
 import Header from "../../../components/header/header";
 import DescriptionInput from "./atoms/descriptionInput";
@@ -11,12 +9,30 @@ import WizardContainer from "../../../components/atoms/wizardContainer/wizardCon
 import ProductImage from "./atoms/productImage";
 import ProductFields from "./atoms/productFields";
 import ProductCategoryTags from "./atoms/productCategoryTags";
+import { Button, Text } from "@chakra-ui/react";
+import { AiFillPlusCircle } from 'react-icons/ai';
+import { Context } from "../../../context/context";
+import { ApiWrapper } from "../../../utils/api/apiWrapper";
 
 const NewEditProduct = ({ isEditing }) => {
-  const history = useNavigate();
   const idProduct = (window.location.href).split('/')[(window.location.href).split('/').length - 1];
-  const items = products?.products;
-  const [product, setProduct] = useState(items[idProduct - 1]);
+  const [product, setProduct] = useState({});
+  const {
+    history,
+    NetComLib,
+    toast,
+  } = useContext(Context);
+
+  const getProduct = () => ApiWrapper(() => NetComLib.Products.getProduct({}, idProduct, (response) => setProduct(response?.data?.product[0])), toast, '', 'Generic Error', false, true);
+  const saveProduct = () => ApiWrapper(() => NetComLib.Products.saveProduct({}, idProduct, product, () => history(`/product/${idProduct}`)), toast, `${product?.title} successfully updated!`);
+  const createProduct = () => ApiWrapper(() => NetComLib.Products.createProduct({}, product, () => history(`/`)), toast, `${product?.title} successfully created!`);
+  
+
+  useEffect(() => {
+    if(isEditing) {
+      getProduct();
+    }
+  },[]);
 
   const inputsFields = [
     {
@@ -69,12 +85,20 @@ const NewEditProduct = ({ isEditing }) => {
             <>
               {/* PRODUCT CONTENT */}
               <ProductFields inputsFields={inputsFields}/>
-              <ProductCategoryTags/>
+              <ProductCategoryTags product={product} setProduct={setProduct}/>
             </>
           }
           bottomPart={
             // PRODUCT DESCRIPTION
-            <DescriptionInput setProduct={setProduct} product={product}/>
+            <>
+              <DescriptionInput setProduct={setProduct} product={product}/>
+              <Button onClick={() => { if(isEditing) { saveProduct() } else { createProduct() }}} w={'100%'} color={'white'} bg={'orange.400'} m={3}>
+                <AiFillPlusCircle/>
+                <Text fontSize={14} pl={2}>
+                  { isEditing ? 'Save game changes' : 'Add new game' }
+                </Text>
+              </Button>
+            </>
           }
         />
       </PageContainer>

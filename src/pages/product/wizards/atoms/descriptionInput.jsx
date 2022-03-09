@@ -30,7 +30,7 @@ const DescriptionInput = ({ product, setProduct, ...props}) => {
           setProduct(newProduct);
         }}
       />
-                  </Flex> 
+    </Flex> 
   )
 }
 

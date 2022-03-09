@@ -15,8 +15,8 @@ const PageContainer = ({ children, align, justify, wrap, padding, direction, col
         direction={ direction ?? 'row'}
         color={ color ?? "white"}
         h={height ?? '100%'}
-        marginLeft={ marginLeft ?? { base: '0px', md: '15vw' }}
-        marginRight={ marginRight ?? { base: '0px', md: '15vw' }}
+        marginLeft={ marginLeft ?? { base: '0px', md: '2vw', xl: '15vw' }}
+        marginRight={ marginRight ?? { base: '0px', md: '2vw', xl: '15vw' }}
         {...props}
         >
           {
