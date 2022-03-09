@@ -27,7 +27,7 @@
     "nodemon": "^2.0.12"
   },
   "scripts": {
-    "start": "mocha && nodemon --experimental-json-modules server.js",
+    "start": "nodemon --experimental-json-modules server.js",
     "start:development": "env-cmd -f ./.env.development nodemon --experimental-json-modules server.js",
     "start:dev": "env-cmd -f ./.env.dev nodemon --experimental-json-modules server.js",
     "start:test": "env-cmd -f ./.env.test nodemon --experimental-json-modules server.js",
